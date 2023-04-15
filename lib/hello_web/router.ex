@@ -18,12 +18,23 @@ defmodule HelloWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    scope "/learn", Learn, as: :learn do
+      get "/", BookController, :index
+      resources "/books", BookController
+    end
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", HelloWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", HelloWeb do
+    pipe_through :api
+
+    get "/", ToolsController, :ping
+    get "/ping", ToolsController, :ping
+
+    scope "/crypto", Crypto, as: :crypto do
+      resources "/tokens", TokenController
+    end
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:hello, :dev_routes) do

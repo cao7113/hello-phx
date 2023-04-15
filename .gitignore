@@ -35,3 +35,5 @@ hello-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.task
+.envrc

@@ -1,0 +1,160 @@
+# https://taskfile.dev
+version: "3"
+vars:
+  API_HOST: "http://localhost:4000"
+
+dotenv: [".envrc"]
+
+tasks:
+  default: task test
+  board: open {{.API_HOST}}/dashboard/home
+  sh:
+    deps:
+      - allow-env
+    cmds:
+      - iex --erl "-kernel shell_history enabled" -S mix
+  sh2:
+    cmds:
+      - iex --erl "-kernel shell_history enabled" -S mix
+  run: iex --erl "-kernel shell_history enabled" -S mix phx.server
+  run2:
+    cmds:
+      - task run
+    env:
+      PORT: 4001
+  test:
+    cmds:
+      - mix test
+    env:
+      USE_FILE_LOGGER: true
+      #DEFAULT_PRIV_KEY: "0101010101010101010101010101010101010101010101010101010101010101"
+
+  alert: tail -f /tmp/appsignal.log
+
+  routes: mix phx.routes
+
+  allow-env:
+    run: once
+    cmds:
+      - direnv allow
+    sources:
+      - .envrc
+
+  ########################################
+  ##    Local Prod
+
+  lp: task lp-sh
+  lp-sh: local-prod/bin/hello remote
+
+  lp-rerun:
+    cmds:
+      - task: lp-build
+      - task lp-run -- stop || true
+      - task lp-run -- daemon_iex
+  lp-restart:
+    cmds:
+      - task: lp-build
+      - task lp-run -- restart
+  lp-start:
+    cmds:
+      - task: lp-build
+      - task lp-run -- daemon_iex
+  lp-stop:
+    cmds:
+      - task lp-run -- stop
+  lp-pid: task lp-run -- pid
+
+  # tk lp-run -- pid
+  lp-run:
+    deps:
+      - lp-init
+    cmds:
+      - |
+        cd local-prod
+        source .env
+        bin/hello {{.CLI_ARGS}}
+  lp-ping: curl {{.LOCAL_PROD_API_HOST}} | jq
+  lp-log: tail -n 100 -f local-prod/logs/prod/debug.log
+  lp-log-arg: tail -n 100 -f local-prod/logs/prod/{{.CLI_ARGS}}.log
+  lp-log1: tail -n 200 -f local-prod/tmp/log/*
+
+  # manual create db
+  lp-mig:
+    dir: local-prod
+    cmds:
+      - source .env && bin/migrate
+  lp-db: pgcli hello_prod
+
+  lp-build:
+    desc: build local prod release
+    cmds:
+      - |
+        mix deps.get --only prod
+        target_dir=local-prod
+        MIX_ENV=prod mix release --overwrite --path $target_dir
+        echo build prod release into $target_dir
+      - task: lp-mig
+
+  lp-init:
+    status:
+      - test -d local-prod
+    cmds:
+      - mkdir -p local-prod
+      - task: lp-link-env
+      - task: lp-link-dot-iex
+
+  # check and cp .env
+  lp-link-env:
+    status:
+      - test -f local-prod/.env
+    cmds:
+      - ln -sf $(pwd -P)/run/dot.env.prod.sample $(pwd -P)/local-prod/.env
+  lp-link-dot-iex:
+    status:
+      - test -f local-prod/.iex.exs
+    cmds:
+      - ln -sf $(pwd -P)/.iex.exs $(pwd -P)/local-prod/.iex.exs
+
+  ########################################
+  ##     Prod
+
+  prod-link-nginx-conf:
+    desc: link nginx conf to nginx
+    cmds:
+      - sudo ln -s ~/hello/run/nginx/prod.conf /etc/nginx/sites-enabled/hello.conf
+      # - sudo service nginx reload
+
+  prun:
+    desc: "prod run like: task prun -- pid"
+    cmds:
+      - _build/prod/rel/hello/bin/hello {{.CLI_ARGS}}
+
+  ########################################
+  ##     DB
+
+  db: sudo -u postgres pgcli hello_dev
+  sql: pgcli hello_phx_dev
+  pdb: pgcli hello_phx_prod
+
+  db-reset:
+    cmds:
+      - mix ecto.drop
+      - mix setup
+  db-mig:
+    cmds:
+      - mix ecto.migrate
+
+  db-redo:
+    cmds:
+      - mix ecto.rollback --step 1
+      - mix ecto.migrate --step 1
+
+  reset-test-db:
+    cmds:
+      - MIX_ENV=test mix ecto.drop
+
+  ########################################
+  ##     Setup
+
+  setup: mix setup
+  init-create: mix phx.new hello-phx --module Hello --app hello --verbose --install
