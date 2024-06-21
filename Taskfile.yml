@@ -3,4 +3,14 @@ version: "3"
 tasks:
   default: mix test
   sh: iex --erl "-kernel shell_history enabled" -S mix
-  run: mix phx.server
+  # iex with test support
+  tsh: MIX_ENV=test task sh
+  run: iex --erl "-kernel shell_history enabled" -S mix phx.server
+  # run: mix phx.server
+  board: open http://localhost:4000/dev/dashboard/home
+  # json format request: http://localhost:4000/?_format=json
+
+  ## DB
+  # create postgres role: CREATE ROLE postgres LOGIN CREATEDB;
+  sql: pgcli hello_phx_dev
+  mig: mix ecto.migrate

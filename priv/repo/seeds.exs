@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+for title <- ["Home Improvement", "Power Tools", "Gardening", "Books", "Education"] do
+  {:ok, _} = HelloPhx.Catalog.create_category(%{title: title})
+end
+
+HelloPhx.Data.batch_gen(5, :product)

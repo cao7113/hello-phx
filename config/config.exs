@@ -11,6 +11,9 @@ config :hello_phx,
   ecto_repos: [HelloPhx.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :endon,
+  repo: HelloPhx.Repo
+
 # Configures the endpoint
 config :hello_phx, HelloPhxWeb.Endpoint,
   url: [host: "localhost"],

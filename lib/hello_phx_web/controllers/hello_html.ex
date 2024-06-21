@@ -7,4 +7,10 @@ defmodule HelloPhxWeb.HelloHTML do
   use HelloPhxWeb, :html
 
   embed_templates("hello_html/*")
+
+  def fun_component(assigns) do
+    ~H"""
+    Hello from simple view function component!
+    """
+  end
 end
