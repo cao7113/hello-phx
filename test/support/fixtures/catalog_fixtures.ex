@@ -12,7 +12,7 @@ defmodule HelloPhx.CatalogFixtures do
       attrs
       |> Enum.into(%{
         description: "some description",
-        price: "120.500000",
+        price: "120.50",
         title: "some title",
         views: 42
       })

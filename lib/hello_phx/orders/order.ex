@@ -1,5 +1,6 @@
 defmodule HelloPhx.Orders.Order do
   use Ecto.Schema
+  use Endon
   import Ecto.Changeset
 
   schema "orders" do

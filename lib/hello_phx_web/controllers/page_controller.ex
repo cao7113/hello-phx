@@ -6,7 +6,6 @@ defmodule HelloPhxWeb.PageController do
     # so skip the default app layout.
     conn
     # |> put_flash(:error, "Let's pretend we have an error.")
-    |> put_flash(:info, "Welcome phx-man!")
     |> render(:home, layout: false)
   end
 end

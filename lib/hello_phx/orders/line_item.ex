@@ -1,5 +1,6 @@
 defmodule HelloPhx.Orders.LineItem do
   use Ecto.Schema
+  use Endon
   import Ecto.Changeset
 
   schema "order_line_items" do

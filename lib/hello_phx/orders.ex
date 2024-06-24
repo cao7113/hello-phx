@@ -28,10 +28,10 @@ defmodule HelloPhx.Orders do
 
   ## Examples
 
-      iex> get_order!(123)
+      iex> get_order!("7488a646-e31f-11e4-aace-600308960662", 123)
       %Order{}
 
-      iex> get_order!(456)
+      iex> get_order!("7488a646-e31f-11e4-aace-600308960662", 456)
       ** (Ecto.NoResultsError)
 
   """

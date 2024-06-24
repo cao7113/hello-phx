@@ -19,7 +19,7 @@ defmodule HelloPhx.ShoppingCart do
 
   """
   def list_carts do
-    Repo.all(Cart)
+    Repo.all(from c in Cart, preload: [:items])
   end
 
   @doc """
@@ -43,10 +43,10 @@ defmodule HelloPhx.ShoppingCart do
 
   ## Examples
 
-      iex> create_cart(%{field: value})
+      iex> create_cart("fb3a631c-c5f4-47f2-8ea6-38f98ce79311")
       {:ok, %Cart{}}
 
-      iex> create_cart(%{field: bad_value})
+      iex> create_cart("bad-value")
       {:error, %Ecto.Changeset{}}
 
   """

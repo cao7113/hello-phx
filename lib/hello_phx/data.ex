@@ -12,7 +12,7 @@ defmodule HelloPhx.Data do
           :rand.uniform()
           |> Decimal.from_float()
           |> Decimal.mult(Enum.random(1..100))
-          |> Decimal.round(6),
+          |> Decimal.round(2),
         title: Faker.Person.name(),
         views: Enum.random(1..50)
       })

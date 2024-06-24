@@ -8,8 +8,10 @@
         v<%= Application.spec(:phoenix, :vsn) %>
       </p>
       <.link href={~p"/hello"}>Hello</.link>
-      <.link href={~p"/products"}>Products</.link>
-      <.link href={~p"/dev/dashboard"}>Live Dashboard</.link>
+      <.link href={~p"/products"}>Catalog Products</.link>
+      <.link href={~p"/cart"}>My Cart</.link>
+      <.link href="/dev/dashboard">Live Dashboard</.link>
+      <.link href="/dev/mailbox">Mailbox</.link>
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
       <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">

@@ -9,18 +9,16 @@ defmodule HelloPhx.ShoppingCartFixtures do
   """
   def unique_cart_user_uuid do
     # raise "implement the logic to generate a unique cart user_uuid"
+    # Ecto.UUID.generate()
     Ecto.UUID.generate()
   end
 
   @doc """
   Generate a cart.
   """
-  def cart_fixture(attrs \\ %{}) do
+  def cart_fixture(user_uuid \\ nil) do
     {:ok, cart} =
-      attrs
-      |> Enum.into(%{
-        user_uuid: unique_cart_user_uuid()
-      })
+      (user_uuid || unique_cart_user_uuid())
       |> HelloPhx.ShoppingCart.create_cart()
 
     cart
@@ -33,7 +31,7 @@ defmodule HelloPhx.ShoppingCartFixtures do
     {:ok, cart_item} =
       attrs
       |> Enum.into(%{
-        price_when_carted: "120.5",
+        price_when_carted: "120.50",
         quantity: 42
       })
       |> HelloPhx.ShoppingCart.create_cart_item()

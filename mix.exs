@@ -25,6 +25,8 @@ defmodule HelloPhx.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
+  # for handy dev testing
+  defp elixirc_paths(:dev), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -32,6 +34,7 @@ defmodule HelloPhx.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.14"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -81,13 +84,23 @@ defmodule HelloPhx.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "test.reset": ["ecto.drop", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind hello_phx", "esbuild hello_phx"],
       "assets.deploy": [
         "tailwind hello_phx --minify",
         "esbuild hello_phx --minify",
         "phx.digest"
-      ]
+      ],
+      "test.demo": &test_demo_task/1
     ]
+  end
+
+  def cli do
+    [preferred_envs: ["test.reset": :test, "test.demo": :test]]
+  end
+
+  def test_demo_task(_args) do
+    Mix.shell().info("mix env: #{Mix.env()}")
   end
 end

@@ -1,5 +1,6 @@
 defmodule HelloPhx.ShoppingCart.Cart do
   use Ecto.Schema
+  use Endon
   import Ecto.Changeset
 
   schema "carts" do
