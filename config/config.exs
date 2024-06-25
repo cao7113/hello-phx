@@ -8,11 +8,9 @@
 import Config
 
 config :hello_phx,
+  run_mode: config_env(),
   ecto_repos: [HelloPhx.Repo],
   generators: [timestamp_type: :utc_datetime]
-
-config :endon,
-  repo: HelloPhx.Repo
 
 # Configures the endpoint
 config :hello_phx, HelloPhxWeb.Endpoint,
@@ -63,6 +61,10 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+## deps
+config :endon,
+  repo: HelloPhx.Repo
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

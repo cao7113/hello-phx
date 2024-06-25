@@ -11,10 +11,13 @@
       <.link href={~p"/products"}>Catalog Products</.link>
       <.link href={~p"/cart"}>My Cart</.link>
       <.link href={~p"/posts"}>Blog Posts</.link>
-      <.link href="/dev/dashboard">Live Dashboard</.link>
-      <.link href="/dev/mailbox">Mailbox</.link>
+      <%= if HelloPhx.run_mode() == :dev do %>
+        <.link href="/dev/dashboard">Live Dashboard</.link>
+        <.link href="/dev/mailbox">Mailbox</.link>
+      <% end %>
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
+      <span><%= HelloPhx.run_mode() %> mode</span>
       <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
         @elixirphoenix
       </a>

@@ -37,3 +37,10 @@ npm-debug.log
 
 .vscode
 .elixir_ls
+
+.env
+.env*
+/priv/static/favicon-*
+/priv/static/images/logo-*
+/priv/static/robots-*
+/priv/static/*.gz
