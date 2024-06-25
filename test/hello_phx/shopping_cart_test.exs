@@ -1,5 +1,5 @@
 defmodule HelloPhx.ShoppingCartTest do
-  use HelloPhx.DataCase
+  use HelloPhx.DataCase, async: true
 
   alias HelloPhx.ShoppingCart
 
@@ -11,7 +11,6 @@ defmodule HelloPhx.ShoppingCartTest do
     @invalid_attrs %{user_uuid: nil}
 
     test "list_carts/0 returns all carts" do
-      Repo.delete_all(Cart)
       cart = cart_fixture()
       assert ShoppingCart.list_carts() == [cart]
     end

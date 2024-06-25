@@ -1,5 +1,5 @@
 defmodule HelloPhx.OrdersTest do
-  use HelloPhx.DataCase
+  use HelloPhx.DataCase, async: true
 
   alias HelloPhx.Orders
 
@@ -11,8 +11,6 @@ defmodule HelloPhx.OrdersTest do
     @invalid_attrs %{user_uuid: nil, total_price: nil}
 
     test "list_orders/0 returns all orders" do
-      Repo.delete_all(Order)
-
       order = order_fixture()
       assert Orders.list_orders() == [order]
     end

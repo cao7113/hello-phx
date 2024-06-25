@@ -54,6 +54,10 @@ defmodule HelloPhxWeb.Router do
     get("/hello/status", HelloController, :status)
     get("/hello/no-layout", HelloController, :no_layout)
     get("/hello/:messenger", HelloController, :show)
+
+    # Blog posts
+    resources "/posts", PostController
+    resources "/comments", CommentController
   end
 
   ## Shopping routes
@@ -79,7 +83,8 @@ defmodule HelloPhxWeb.Router do
     pipe_through(:api)
 
     get "/ping", ApiController, :ping
-    resources("/urls", UrlController, except: [:new, :edit])
+    resources "/urls", UrlController, except: [:new, :edit]
+    resources "/articles", ArticleController, except: [:new, :edit]
   end
 
   scope "/api", HelloPhxWeb do

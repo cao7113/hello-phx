@@ -1,5 +1,5 @@
 defmodule HelloPhx.CatalogTest do
-  use HelloPhx.DataCase
+  use HelloPhx.DataCase, async: true
 
   alias HelloPhx.Catalog
 
@@ -11,9 +11,6 @@ defmodule HelloPhx.CatalogTest do
     @invalid_attrs %{description: nil, title: nil, price: nil, views: nil}
 
     test "list_products/0 returns all products" do
-      # first clear all
-      _ = Repo.delete_all(Product)
-
       product = product_fixture()
       assert Catalog.list_products() == [product]
     end

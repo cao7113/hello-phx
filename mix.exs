@@ -69,6 +69,12 @@ defmodule HelloPhx.MixProject do
       # also used in HelloPhx.Data
       {:faker, "~> 0.18"},
       {:endon, "~> 2.0"}
+
+      ## Admin
+      # https://github.com/aesmail/kaffy
+      # {:kaffy, "~> 0.10.2"},
+      # {:kaffy, github: "aesmail/kaffy", depth: 1}
+      # https://github.com/naymspace/backpex
     ]
   end
 
@@ -97,7 +103,12 @@ defmodule HelloPhx.MixProject do
   end
 
   def cli do
-    [preferred_envs: ["test.reset": :test, "test.demo": :test]]
+    [
+      preferred_envs: [
+        "test.reset": :test,
+        "test.demo": :test
+      ]
+    ]
   end
 
   def test_demo_task(_args) do
