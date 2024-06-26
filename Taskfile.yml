@@ -94,7 +94,7 @@ tasks:
 
   ## DB Setup
   # db: sudo -u postgres pgcli hello_phx_dev
-  sql: pgcli hello_phx_dev
+  sql: pgcli hello_phx_devw
 
   mig: mix ecto.migrate
   db-redo:
