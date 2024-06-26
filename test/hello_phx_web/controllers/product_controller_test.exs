@@ -37,6 +37,7 @@ defmodule HelloPhxWeb.ProductControllerTest do
       assert html_response(conn, 200) =~ "Product #{id}"
     end
 
+    @tag :capture_log
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, ~p"/products", product: @invalid_attrs)
       assert html_response(conn, 200) =~ "New Product"

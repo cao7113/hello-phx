@@ -3,6 +3,7 @@ defmodule HelloPhxWeb.ProductController do
 
   alias HelloPhx.Catalog
   alias HelloPhx.Catalog.Product
+  require Logger
 
   def index(conn, _params) do
     products = Catalog.list_products()
@@ -22,6 +23,10 @@ defmodule HelloPhxWeb.ProductController do
         |> redirect(to: ~p"/products/#{product}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        unless changeset.valid? do
+          Logger.warning("invalid product changeset: #{inspect(changeset)}")
+        end
+
         render(conn, :new, changeset: changeset)
     end
   end

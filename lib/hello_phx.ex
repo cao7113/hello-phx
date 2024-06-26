@@ -7,8 +7,12 @@ defmodule HelloPhx do
   if it comes from the database, an external API or others.
   """
 
+  @app :hello_phx
+
   @doc """
   Get current run mode based on build-env info
   """
-  def run_mode, do: Application.get_env(:hello_phx, :run_mode)
+  def run_mode, do: Application.get_env(@app, :run_mode)
+
+  def all_env, do: Application.get_all_env(@app)
 end

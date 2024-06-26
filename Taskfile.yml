@@ -32,7 +32,7 @@ tasks:
         # MIX_ENV=prod iex -S mix phx.server
         # in daemon mode
         # MIX_ENV=prod elixir --erl "-detached" -S mix phx.server
-  lpsh:
+  lp-sh:
     cmds:
       - |
         source .env.prod
@@ -85,16 +85,22 @@ tasks:
 
   ## Fly.io https://hexdocs.pm/phoenix/fly.html
   # https://fly.io/docs/elixir/getting-started/
-  fsh: fly ssh console --select -C "/app/bin/hello remote"
-
+  # https://fly.io/docs/elixir/the-basics/iex-into-running-app/
+  fly-sh: fly ssh console --select -C "/app/bin/hello_hpx remote"
+  # deploy new app version up
+  fly-up: fly deploy
+  # create new app and fly.toml
+  fly-launch: fly launch --debug --verbose
+  fly-db: fly postgres connect -a hello-phx-up-db
+  fly-ls: fly list
   # https://fly.io/docs/flyctl/install/
-  install-flyctl: brew install flyctl
+  fly-install: brew install flyctl
 
   ## Render has first class support for Phoenix applications.
 
   ## DB Setup
   # db: sudo -u postgres pgcli hello_phx_dev
-  sql: pgcli hello_phx_devw
+  sql: pgcli hello_phx_dev
 
   mig: mix ecto.migrate
   db-redo:
