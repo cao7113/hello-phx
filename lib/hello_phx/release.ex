@@ -22,9 +22,11 @@ defmodule HelloPhx.Release do
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, opts))
       Logger.warning("reset repo: #{inspect(repo)}")
     end
+
+    load_seeds!()
   end
 
-  def load_seeds!(seed_file \\ "priv/repo/seeds.exs") do
+  def load_seeds!(seed_file \\ HelloPhx.priv_dir() <> "/repo/seeds.exs") do
     Code.eval_file(seed_file)
     Logger.warning("eval data seeds from: #{seed_file}")
   end

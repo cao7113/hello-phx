@@ -15,4 +15,6 @@ defmodule HelloPhx do
   def run_mode, do: Application.get_env(@app, :run_mode)
 
   def all_env, do: Application.get_all_env(@app)
+
+  def priv_dir, do: :code.priv_dir(@app) |> to_string()
 end
