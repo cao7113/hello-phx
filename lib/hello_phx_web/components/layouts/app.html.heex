@@ -12,8 +12,9 @@
       <.link href={~p"/cart"}>My Cart</.link>
       <.link href={~p"/posts"}>Blog Posts</.link>
       <%= if HelloPhx.run_mode() == :dev do %>
-        <.link href="/dev/dashboard">Live Dashboard</.link>
+        || <.link href="/dev/dashboard">Live Dashboard</.link>
         <.link href="/dev/mailbox">Mailbox</.link>
+        <.link href="https://hello-phx-up.fly.dev" target="_blank">Fly app</.link>
       <% end %>
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">

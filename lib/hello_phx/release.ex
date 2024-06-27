@@ -3,14 +3,30 @@ defmodule HelloPhx.Release do
   Used for executing DB release tasks when run in production without Mix
   installed.
   """
+  require Logger
   @app :hello_phx
 
-  def migrate do
+  def migrate(opts \\ [all: true]) do
     load_app()
 
     for repo <- repos() do
-      {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
+      {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, opts))
     end
+  end
+
+  def reset!(opts \\ [all: true]) do
+    load_app()
+
+    for repo <- repos() do
+      {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, opts))
+      {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, opts))
+      Logger.warning("reset repo: #{inspect(repo)}")
+    end
+  end
+
+  def load_seeds!(seed_file \\ "priv/repo/seeds.exs") do
+    Code.eval_file(seed_file)
+    Logger.warning("eval data seeds from: #{seed_file}")
   end
 
   def rollback(repo, version) do
