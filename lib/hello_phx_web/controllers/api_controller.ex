@@ -8,4 +8,8 @@ defmodule HelloPhxWeb.ApiController do
       msg: :pong
     })
   end
+
+  def mock_404(_conn, _) do
+    {:error, :not_found}
+  end
 end

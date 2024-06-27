@@ -51,9 +51,13 @@ defmodule HelloPhxWeb.Router do
     get("/hello", HelloController, :index)
     get("/hello/func", HelloController, :fun_component)
     get("/hello/text", HelloController, :text_action)
-    get("/hello/status", HelloController, :status)
     get("/hello/no-layout", HelloController, :no_layout)
+    get "/hello/mock-error", HelloController, :mock_error
     get("/hello/:messenger", HelloController, :show)
+
+    # Status code
+    get "/statuses", StatusController, :index
+    get "/statuses/:code", StatusController, :show
 
     # Blog posts
     resources "/posts", PostController
@@ -83,6 +87,8 @@ defmodule HelloPhxWeb.Router do
     pipe_through(:api)
 
     get "/ping", ApiController, :ping
+    get "/mock-404", ApiController, :mock_404
+
     resources "/urls", UrlController, except: [:new, :edit]
     resources "/articles", ArticleController, except: [:new, :edit]
   end

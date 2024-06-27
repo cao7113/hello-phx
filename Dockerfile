@@ -62,6 +62,8 @@ COPY config/runtime.exs config/
 
 COPY rel rel
 RUN mix release
+# iex helpers
+COPY .iex.exs _build/${MIX_ENV}/rel/hello_phx/bin
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities

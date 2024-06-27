@@ -17,17 +17,15 @@ defmodule HelloPhxWeb.HelloController do
     text(conn, "hello text response!")
   end
 
-  def status(conn, _) do
-    conn
-    |> put_resp_content_type("text/plain")
-    |> send_resp(201, "")
-  end
-
   def no_layout(conn, _) do
     conn
     |> put_root_layout(false)
     |> put_layout(false)
     # |> put_root_layout(html: :admin)
     |> render(:no_layout)
+  end
+
+  def mock_error(_, _) do
+    raise HelloPhxWeb.StatusCodeError, message: "mock error"
   end
 end

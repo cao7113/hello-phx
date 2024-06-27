@@ -2,7 +2,9 @@ defmodule HelloPhxWeb.ErrorJSONTest do
   use HelloPhxWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert HelloPhxWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert HelloPhxWeb.ErrorJSON.render("404.json", %{}) == %{
+             errors: %{detail: "Customized Not Found"}
+           }
   end
 
   test "renders 500" do

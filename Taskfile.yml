@@ -20,6 +20,7 @@ tasks:
   open: open {{.HOST}}
   board: open {{.HOST}}/dev/dashboard/home
   # json format request: http://localhost:4000/?_format=json
+  # unknonw page: http://localhost:4000/unknown-page/to/404
 
   allow-env:
     run: once
@@ -66,7 +67,7 @@ tasks:
 
   ## Release mode https://hexdocs.pm/phoenix/releases.html
   psh: task pbin -- remote
-  prun: task pbin -- start
+  prun: PORT=4002 task pbin -- daemon_iex
   pbin:
     desc: "run by: task pbin -- start"
     cmds:

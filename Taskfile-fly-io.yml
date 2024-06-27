@@ -17,6 +17,7 @@ tasks:
   st: fly status
   # deploy new app version
   up: fly deploy
+  reup: fly app restart
   log: fly logs
   open: fly open
   # create new app and fly.toml

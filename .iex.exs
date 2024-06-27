@@ -1,7 +1,10 @@
+# IO.puts("project .iex.exs loaded")
+
 # helper aliases
 alias HelloPhx, as: H
 alias HelloPhx.Repo
 alias HelloPhx.Data, as: D
+alias HelloPhxWeb, as: Hw
 
 alias HelloPhx.Catalog
 alias HelloPhx.Catalog.Product
