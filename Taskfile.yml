@@ -4,6 +4,12 @@ vars:
   HOST: "http://localhost:4000"
 # dotenv: [".envrc"]
 
+includes:
+  fly-io:
+    taskfile: ./Taskfile-fly-io.yml
+    aliases: [f, fly]
+    optional: true
+
 tasks:
   default: mix test
   sh: iex --erl "-kernel shell_history enabled" -S mix
@@ -58,14 +64,15 @@ tasks:
         source .env.prod
         MIX_ENV=prod mix ecto.migrate
 
-  ## Release https://hexdocs.pm/phoenix/releases.html
-  prun:
+  ## Release mode https://hexdocs.pm/phoenix/releases.html
+  psh: task pbin -- remote
+  prun: task pbin -- start
+  pbin:
     desc: "run by: task pbin -- start"
     cmds:
       - |
         source .env.prod
         _build/prod/rel/hello_phx/bin/hello_phx {{.CLI_ARGS}}
-
   prel:
     deps:
       - lp-build
@@ -82,19 +89,6 @@ tasks:
 
   ## Docker build with orbstack
   dk-build: docker build -t hello_phx .
-
-  ## Fly.io https://hexdocs.pm/phoenix/fly.html
-  # https://fly.io/docs/elixir/getting-started/
-  # https://fly.io/docs/elixir/the-basics/iex-into-running-app/
-  fly-sh: fly ssh console --select -C "/app/bin/hello_hpx remote"
-  # deploy new app version up
-  fly-up: fly deploy
-  # create new app and fly.toml
-  fly-launch: fly launch --debug --verbose
-  fly-db: fly postgres connect -a hello-phx-up-db
-  fly-ls: fly list
-  # https://fly.io/docs/flyctl/install/
-  fly-install: brew install flyctl
 
   ## Render has first class support for Phoenix applications.
 

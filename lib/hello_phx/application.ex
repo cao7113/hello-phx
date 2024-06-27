@@ -7,6 +7,8 @@ defmodule HelloPhx.Application do
 
   @impl true
   def start(_type, _args) do
+    topologies = Application.get_env(:libcluster, :topologies) || []
+
     children = [
       HelloPhxWeb.Telemetry,
       HelloPhx.Repo,
@@ -14,6 +16,8 @@ defmodule HelloPhx.Application do
       {Phoenix.PubSub, name: HelloPhx.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: HelloPhx.Finch},
+      # setup for clustering
+      {Cluster.Supervisor, [topologies, [name: HelloPhx.ClusterSupervisor]]},
       # Start a worker by calling: HelloPhx.Worker.start_link(arg)
       # {HelloPhx.Worker, arg},
       # Start to serve requests, typically the last entry

@@ -68,7 +68,10 @@ defmodule HelloPhx.MixProject do
       # {:faker, "~> 0.18", only: :test}
       # also used in HelloPhx.Data
       {:faker, "~> 0.18"},
-      {:endon, "~> 2.0"}
+      {:endon, "~> 2.0"},
+
+      ## cluster
+      {:libcluster, "~> 3.3"}
 
       ## Admin
       # https://github.com/aesmail/kaffy
