@@ -21,6 +21,8 @@
       <%= cat.title %> <br />
     <% end %>
   </:item>
+  <:item title="Inserted At"><%= @product.inserted_at %></:item>
+  <:item title="Updated At"><%= @product.updated_at %></:item>
 </.list>
 
 <.back navigate={~p"/products"}>Back to products</.back>
