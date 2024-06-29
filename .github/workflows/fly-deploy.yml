@@ -28,5 +28,3 @@ jobs:
         env:
           # ref Github Settings -> Secrets -> Actions -> Repository secrets
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          GIT_COMMIT_INFO: ${{ GIT_COMMIT_INFO }}
-          GIT_COMMIT_INFO1: ${{ GIT_COMMIT_INFO1 }}
