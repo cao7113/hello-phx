@@ -16,14 +16,14 @@ jobs:
         run: |
           pwd
           ls -al
-          export GIT_COMMIT_INFO='$(git log -1 --format="%H %ct")'
-          echo GIT_COMMIT_INFO=$GIT_COMMIT_INFO      
+          export GIT_COMMIT_INFO="$(git log -1 --format='%H %ct')"
+          echo GIT_COMMIT_INFO="$GIT_COMMIT_INFO"      
           export GIT_COMMIT_INFO1=$(git log -1 --format="%H %ct")
-          echo GIT_COMMIT_INFO1=$GIT_COMMIT_INFO1
+          echo GIT_COMMIT_INFO1="$GIT_COMMIT_INFO1"
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - run: flyctl deploy --remote-only --env GIT_COMMIT_INFO="$GIT_COMMIT_INFO"
+      - run: flyctl deploy --remote-only --env GIT_COMMIT_INFO="$GIT_COMMIT_INFO" --env GIT_COMMIT_INFO1="$GIT_COMMIT_INFO1"
         env:
           # ref Github Settings -> Secrets -> Actions -> Repository secrets
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
