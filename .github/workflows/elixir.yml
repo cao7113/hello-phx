@@ -88,7 +88,6 @@ jobs:
           key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
             ${{ runner.os }}-mix-${{ env.cache-name }}-
-            ${{ runner.os }}-mix-
 
       # Conditionally bust the cache when job is re-run.
       # Sometimes, we may have issues with incremental builds that are fixed by
