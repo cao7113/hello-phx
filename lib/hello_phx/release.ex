@@ -4,7 +4,8 @@ defmodule HelloPhx.Release do
   installed.
   """
   require Logger
-  @app :hello_phx
+
+  @app HelloPhx.app()
 
   def migrate(opts \\ [all: true]) do
     load_app()
@@ -12,6 +13,11 @@ defmodule HelloPhx.Release do
     for repo <- repos() do
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, opts))
     end
+  end
+
+  def rollback(repo, version) do
+    load_app()
+    {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 
   def reset!(opts \\ [all: true]) do
@@ -29,11 +35,6 @@ defmodule HelloPhx.Release do
   def load_seeds!(seed_file \\ HelloPhx.priv_dir() <> "/repo/seeds.exs") do
     Code.eval_file(seed_file)
     Logger.warning("eval data seeds from: #{seed_file}")
-  end
-
-  def rollback(repo, version) do
-    load_app()
-    {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 
   defp repos do

@@ -7,7 +7,9 @@ defmodule HelloPhx do
   if it comes from the database, an external API or others.
   """
 
-  @app :hello_phx
+  @app Application.get_application(__MODULE__)
+  def app, do: @app
+  def vsn, do: Application.spec(app(), :vsn)
 
   @doc """
   Get current run mode based on build-env info

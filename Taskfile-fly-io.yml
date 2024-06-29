@@ -34,6 +34,7 @@ tasks:
   ssh-agent: fly ssh issue --agent
   # Opening https://fly.io/apps/hello-phx-up
   board: fly dashboard
+  # Add a dedicated ipv4 with: fly ips allocate-v4
 
   # https://fly.io/docs/flyctl/install/
   install: brew install flyctl

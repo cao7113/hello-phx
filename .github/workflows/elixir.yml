@@ -1,3 +1,4 @@
+# https://fly.io/docs/elixir/advanced-guides/github-actions-elixir-ci-cd/
 name: Elixir CI
 
 on:
@@ -12,13 +13,33 @@ permissions:
 jobs:
   build:
     name: Build and test
+
+    # Sets the ENV `MIX_ENV` to `test` for running tests
+    env:
+      MIX_ENV: test
+
+    # # Set up a Postgres DB service. By default, Phoenix applications
+    # # use Postgres. This creates a database for running tests.
+    # # Additional services can be defined here if required.
+    # services:
+    #   db:
+    #     image: postgres:12
+    #     ports: ['5432:5432']
+    #     env:
+    #       POSTGRES_PASSWORD: postgres
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+
     # https://github.com/actions/runner-images?tab=readme-ov-file#available-images
     # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md
     runs-on: ubuntu-latest
 
     steps:
-      # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md#postgresql
-      # https://www.cybertec-postgresql.com/en/postgresql-github-actions-continuous-integration/
+      ## Setup Dependent Services locally
+      # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#postgresql
       - name: "Start pre-installed PostgreSQL service with user: postgres"
         run: |
           sudo systemctl start postgresql.service
@@ -32,21 +53,73 @@ jobs:
           sudo -u postgres createdb --owner=ciuser hello_phx_test
           PGPASSWORD=ciuser123 psql --username=ciuser --host=localhost --list hello_phx_test
 
-      - uses: actions/checkout@v4
-      - name: Set up Elixir
-        # https://github.com/erlef/setup-beam
+      ## Main App
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: "Set up Elixir as https://github.com/erlef/setup-beam"
         uses: erlef/setup-beam@v1.18.0
         with:
           version-file: .tool-versions
           version-type: strict
-      - name: Restore dependencies cache
-        uses: actions/cache@v3
+
+      # Define how to cache deps. Restores existing cache if present.
+      - name: Cache deps
+        id: cache-deps
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-elixir-deps
         with:
           path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
+
+      # Define how to cache the `_build` directory. After the first run,
+      # this speeds up tests runs a lot. This includes not re-compiling our
+      # project's downloaded deps every run.
+      - name: Cache compiled build
+        id: cache-build
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-compiled-build
+        with:
+          path: _build
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
+            ${{ runner.os }}-mix-
+
+      # Conditionally bust the cache when job is re-run.
+      # Sometimes, we may have issues with incremental builds that are fixed by
+      # doing a full recompile. In order to not waste dev time on such trivial
+      # issues (while also reaping the time savings of incremental builds for
+      # *most* day-to-day development), force a full recompile only on builds
+      # that are retried.
+      - name: Clean to rule out incremental build as a source of flakiness
+        if: github.run_attempt != '1'
+        run: |
+          mix deps.clean --all
+          mix clean
+        shell: sh
+
+      # Download project dependencies. If unchanged, uses
+      # the cached version.
       - name: Install dependencies
-        run: mix deps.get --only test
+        run: mix deps.get
+
+      # Compile the project treating any warnings as errors.
+      # Customize this step if a different behavior is desired.
+      - name: Compiles without warnings
+        run: mix compile --warnings-as-errors
+
+      # Check that the checked in code has already been formatted.
+      # This step fails if something was found unformatted.
+      # Customize this step as desired.
+      - name: Check Formatting
+        run: mix format --check-formatted
+
+      # Step: Execute the tests.
       - name: Run tests
         run: mix test
         env:

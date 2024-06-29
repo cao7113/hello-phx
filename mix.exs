@@ -1,9 +1,11 @@
 defmodule HelloPhx.MixProject do
   use Mix.Project
+  # Code.require_file("lib/mix/tasks/version.ex", __DIR__)
 
   def project do
     [
       app: :hello_phx,
+      # version: "0.1.#{Mix.Tasks.Version.latest_commit().version}",
       version: "0.1.0",
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -69,6 +71,7 @@ defmodule HelloPhx.MixProject do
       # also used in HelloPhx.Data
       {:faker, "~> 0.18"},
       {:endon, "~> 2.0"},
+      {:timex, "~> 3.7"},
 
       ## cluster
       {:libcluster, "~> 3.3"}
@@ -116,5 +119,6 @@ defmodule HelloPhx.MixProject do
 
   def test_demo_task(_args) do
     Mix.shell().info("mix env: #{Mix.env()}")
+    Mix.Tasks.Version.run(nil)
   end
 end
