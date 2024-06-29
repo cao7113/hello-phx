@@ -16,6 +16,7 @@ defmodule HelloPhx do
   Get current run mode based on build-env info
   """
   def run_mode, do: Application.get_env(@app, :run_mode)
+  def commit, do: Application.get_env(@app, :commit)
 
   def all_env, do: Application.get_all_env(@app)
 

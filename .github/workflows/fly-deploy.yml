@@ -10,7 +10,10 @@ jobs:
     concurrency: deploy-group
     steps:
       - uses: actions/checkout@v4
+
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
+
+      - run: flyctl deploy --remote-only --build-arg GIT_COMMIT_INFO=$(git log -1 --format="%H %ct")
         env:
+          # ref Github Settings -> Secrets -> Actions -> Repository secrets
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

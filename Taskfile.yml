@@ -68,7 +68,7 @@ tasks:
 
   ## Release mode https://hexdocs.pm/phoenix/releases.html
   psh: task pbin -- remote
-  prun: PORT=4002 task pbin -- daemon_iex
+  prun: task pbin -- start_iex
   pbin:
     desc: "run by: task pbin -- start"
     cmds:
