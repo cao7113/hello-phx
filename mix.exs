@@ -1,6 +1,5 @@
 defmodule HelloPhx.MixProject do
   use Mix.Project
-  # Code.require_file("lib/mix/tasks/version.ex", __DIR__)
 
   def project do
     [
@@ -119,6 +118,5 @@ defmodule HelloPhx.MixProject do
 
   def test_demo_task(_args) do
     Mix.shell().info("mix env: #{Mix.env()}")
-    Mix.Tasks.Version.run(nil)
   end
 end

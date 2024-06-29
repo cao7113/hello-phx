@@ -7,7 +7,8 @@ defmodule HelloPhx do
   if it comes from the database, an external API or others.
   """
 
-  @app Application.get_application(__MODULE__)
+  # Application.get_application(__MODULE__)
+  @app :hello_phx
   def app, do: @app
   def vsn, do: Application.spec(app(), :vsn)
 

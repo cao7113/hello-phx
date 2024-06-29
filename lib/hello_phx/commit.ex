@@ -1,27 +1,15 @@
-defmodule Mix.Tasks.Version do
-  use Mix.Task
-
-  @shortdoc "Get project version"
-
+defmodule HelloPhx.Commit do
   @moduledoc """
-  Support version info from git commands or .git/refs/heads/main file
+  Get commit info from git command or .git/refs/heads/main file
 
   git log -1 --format="%H %ct"
   git log -1 origin/main --format="%H %cd" --date=local
   """
 
-  @impl Mix.Task
+  @git_branch "main"
+  @head_file ".git/refs/heads/#{@git_branch}"
 
-  def run(_args) do
-    latest_commit()
-    |> inspect(pretty: true, width: 80)
-    |> Mix.shell().info
-  end
-
-  @branch "main"
-  @head_file ".git/refs/heads/#{@branch}"
-
-  def latest_commit do
+  def latest do
     git_cmd_path()
     |> case do
       nil ->
