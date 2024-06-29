@@ -16,6 +16,7 @@ jobs:
         run: |
           pwd
           ls -al
+          git log -1 --format="%H %ct"
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
