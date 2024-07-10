@@ -28,9 +28,6 @@ RUN apt-get update -y && apt-get install -y build-essential git \
 # prepare build dir
 WORKDIR /app
 
-RUN echo GIT_COMMIT_INFO=${GIT_COMMIT_INFO} > commit_info
-RUN echo GIT_COMMIT_INFO1=${GIT_COMMIT_INFO1}
-
 # install hex + rebar
 RUN mix local.hex --force && \
   mix local.rebar --force
@@ -75,9 +72,6 @@ RUN mix release
 # the compiled release and other runtime necessities
 FROM ${RUNNER_IMAGE}
 
-ENV GIT_COMMIT_INFO=${GIT_COMMIT_INFO}
-ENV GIT_COMMIT_INFO1=${GIT_COMMIT_INFO1}
-
 RUN apt-get update -y && \
   apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
@@ -91,8 +85,6 @@ ENV LC_ALL en_US.UTF-8
 
 WORKDIR "/app"
 RUN chown nobody /app
-RUN echo GIT_COMMIT_INFO="$GIT_COMMIT_INFO" > commit_info
-COPY --from=builder --chown=nobody:root /app/commit_info0 ./
 
 # set runner ENV
 ENV MIX_ENV="prod"
