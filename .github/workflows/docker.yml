@@ -1,4 +1,4 @@
-name: Docker Try
+name: Docker Test
 on:
   push:
     branches:
@@ -13,6 +13,8 @@ jobs:
   test-docker:
     runs-on: ubuntu-latest
     services:
+      ## todo: require pg service
+
       api-server:
         image: cao7113/hello-phx
         ports:

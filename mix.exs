@@ -8,12 +8,20 @@ defmodule HelloPhx.MixProject do
     [
       app: :hello_phx,
       version: @version,
-      source_url: @source_url,
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      source_url: @source_url,
+      releases: [
+        hello_api: [
+          include_executables_for: [:unix],
+          applications: [runtime_tools: :permanent],
+          steps: release_steps(System.get_env("RELEASE_TAR"))
+        ]
+      ],
+      default_release: :hello_phx
     ]
   end
 
@@ -123,4 +131,7 @@ defmodule HelloPhx.MixProject do
   def test_demo_task(_args) do
     Mix.shell().info("mix env: #{Mix.env()}")
   end
+
+  defp release_steps(need_tar) when need_tar in [nil, ""], do: [:assemble]
+  defp release_steps(_), do: [:assemble, :tar]
 end
