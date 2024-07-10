@@ -22,6 +22,11 @@ tasks:
   # unknonw page: http://localhost:4000/unknown-page/to/404
   deps: mix do deps.get + deps.compile
 
+  ## Git ops
+  cmt: mix git_ops.release --yes && git push --follow-tags
+  app-info: mix git_ops.project_info
+  init-release: mix git_ops.release --initial
+
   allow-env:
     run: once
     cmds:
