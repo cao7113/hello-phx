@@ -15,10 +15,8 @@ config :hello_phx,
   build_mode: config_env(),
   build_time: DateTime.utc_now(),
   source_url: Mix.Project.config()[:source_url],
-  commit: %{
-    commit_id: System.get_env("GIT_COMMIT_ID", ""),
-    commit_time: System.get_env("GIT_COMMIT_TIME", "")
-  }
+  commit_id: System.get_env("GIT_COMMIT_ID", ""),
+  commit_time: System.get_env("GIT_COMMIT_TIME", "")
 
 # Configures the endpoint
 config :hello_phx, HelloPhxWeb.Endpoint,

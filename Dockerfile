@@ -98,7 +98,8 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/hello_phx ./
 USER nobody
 
 # iex helpers, Note: bin/server script set cwd to bin/ 
-COPY .iex.exs _build/${MIX_ENV}/rel/hello_phx/bin
+# COPY .iex.exs _build/${MIX_ENV}/rel/hello_phx/bin
+COPY .iex.exs bin
 
 # If using an environment that doesn't automatically reap zombie processes, it is
 # advised to add an init process such as tini via `apt-get install`
