@@ -7,15 +7,18 @@
 # This file is based on these images:
 #
 #   - https://hub.docker.com/r/hexpm/elixir/tags - for the build image
+#   - https://hub.docker.com/r/hexpm/elixir/tags?page=&page_size=&ordering=&name=bullseye-
 #   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20240612-slim - for the release image
+#   - https://hub.docker.com/_/debian/tags?page=&page_size=&ordering=&name=bullseye
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.17.1-erlang-27.0-debian-bullseye-20240612-slim
+#   - Ex: hexpm/elixir:1.17.2-erlang-27.0-debian-bullseye-20240701-slim
 # 
-# hexpm/elixir image build from https://github.com/hexpm/bob#docker-images
+# hexpm/elixir images built by https://github.com/hexpm/bob#docker-images
 
-ARG ELIXIR_VERSION=1.17.1
+ARG ELIXIR_VERSION=1.17.2
 ARG OTP_VERSION=27.0
-ARG DEBIAN_VERSION=bullseye-20240612-slim
+ARG DEBIAN_VERSION=bullseye-20240701-slim
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
@@ -97,8 +100,7 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/hello_phx ./
 
 USER nobody
 
-# iex helpers, Note: bin/server script set cwd to bin/ 
-# COPY .iex.exs _build/${MIX_ENV}/rel/hello_phx/bin
+# carry iex helpers, Note: bin/server script set cwd to bin/, check by: File.cwd!
 COPY .iex.exs bin
 
 # If using an environment that doesn't automatically reap zombie processes, it is

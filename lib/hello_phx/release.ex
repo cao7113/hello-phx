@@ -5,7 +5,6 @@ defmodule HelloPhx.Release do
   """
   require Logger
 
-  # @app HelloPhx.app()
   @app :hello_phx
 
   def migrate(opts \\ [all: true]) do

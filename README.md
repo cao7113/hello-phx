@@ -7,7 +7,7 @@ Acts as learning playground following guides at https://hexdocs.pm/phoenix/overv
 
 ## Flying on fly.io
 
-https://hello-phx-up.fly.dev/
+- https://hello-phx-up.fly.dev/
 
 ## Getting Started
 
@@ -19,6 +19,10 @@ To start your Phoenix server:
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+
+## Changelogs
+
+- https://github.com/cao7113/hello-phx/blob/main/CHANGELOG.md
 
 ## Learn more
 
