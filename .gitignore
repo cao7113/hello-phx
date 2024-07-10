@@ -35,3 +35,12 @@ hello_phx-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.vscode
+.elixir_ls
+
+.env
+.env*
+/priv/static/favicon-*
+/priv/static/images/logo-*
+/priv/static/robots-*
+/priv/static/*.gz

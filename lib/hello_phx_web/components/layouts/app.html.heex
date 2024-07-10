@@ -7,8 +7,18 @@
       <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
         v<%= Application.spec(:phoenix, :vsn) %>
       </p>
+      <.link href={~p"/hello"}>Hello</.link>
+      <.link href={~p"/products"}>Catalog Products</.link>
+      <.link href={~p"/cart"}>My Cart</.link>
+      <.link href={~p"/posts"}>Blog Posts</.link>
+      <%= if HelloPhx.build_mode() == :dev do %>
+        || <.link href="/dev/dashboard">Live Dashboard</.link>
+        <.link href="/dev/mailbox">Mailbox</.link>
+        <.link href="https://hello-phx-up.fly.dev" target="_blank">Fly app</.link>
+      <% end %>
     </div>
     <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
+      <span><%= HelloPhx.build_mode() %> mode</span>
       <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
         @elixirphoenix
       </a>

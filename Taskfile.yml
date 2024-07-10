@@ -1,6 +1,138 @@
 # https://taskfile.dev
 version: "3"
+vars:
+  HOST: "http://localhost:4000"
+# dotenv: [".envrc"]
+
+includes:
+  fly-io:
+    taskfile: ./Taskfile-fly-io.yml
+    aliases: [f, fly]
+    optional: true
+
 tasks:
   default: mix test
   sh: iex --erl "-kernel shell_history enabled" -S mix
-  run: mix phx.server
+  # iex with test support in test env
+  tsh: MIX_ENV=test task sh
+  run: iex --erl "-kernel shell_history enabled" -S mix phx.server
+  open: open {{.HOST}}
+  board: open {{.HOST}}/dev/dashboard/home
+  # json format request: http://localhost:4000/?_format=json
+  # unknonw page: http://localhost:4000/unknown-page/to/404
+  deps: mix do deps.get + deps.compile
+
+  allow-env:
+    run: once
+    cmds:
+      - direnv allow
+    sources:
+      - .envrc
+
+  ## local prod deployment https://hexdocs.pm/phoenix/deployment.html
+  lp:
+    cmds:
+      - |
+        source .env.prod
+        MIX_ENV=prod mix phx.server
+        # with iex
+        # MIX_ENV=prod iex -S mix phx.server
+        # in daemon mode
+        # MIX_ENV=prod elixir --erl "-detached" -S mix phx.server
+  lp-sh:
+    cmds:
+      - |
+        source .env.prod
+        MIX_ENV=prod iex -S mix
+
+  lp-build:
+    desc: build local prod release
+    cmds:
+      - |
+        mix deps.get --only prod
+        MIX_ENV=prod mix compile
+        MIX_ENV=prod mix assets.deploy
+
+  lp-db-setup:
+    cmds:
+      - |
+        source .env.prod
+        MIX_ENV=prod mix ecto.setup
+
+  lp-mig:
+    cmds:
+      - |
+        source .env.prod
+        MIX_ENV=prod mix ecto.migrate
+
+  ## Release mode https://hexdocs.pm/phoenix/releases.html
+  psh: task pbin -- remote
+  prun: task pbin -- start_iex
+  pbin:
+    desc: "run by: task pbin -- start"
+    cmds:
+      - |
+        source .env.prod
+        _build/prod/rel/hello_phx/bin/hello_phx {{.CLI_ARGS}}
+  prel:
+    deps:
+      - lp-build
+    cmds:
+      - |
+        MIX_ENV=prod mix release --overwrite
+
+  pdb: pgcli hello_phx_prod
+  pmig:
+    cmds:
+      - |
+        source .env.prod
+        _build/prod/rel/hello_phx/bin/migrate
+
+  ## Docker build with orbstack
+  dk-build: docker build -t hello_phx .
+
+  ## Render has first class support for Phoenix applications.
+
+  ## DB Setup
+  # db: sudo -u postgres pgcli hello_phx_dev
+  sql: pgcli hello_phx_dev
+
+  mig: mix ecto.migrate
+  db-redo:
+    cmds:
+      - mix ecto.rollback --step 1
+      - mix ecto.migrate --step 1
+
+  install-pg:
+    desc: install pg
+    sources:
+      - which psql
+    cmds:
+      - brew install postgresql
+
+  init-pg-user:
+    desc: create init dev user
+    cmds:
+      - echo use postgres as default password
+      # create postgres role sql: CREATE ROLE postgres LOGIN CREATEDB;
+      - createuser postgres -s -P
+
+  install-pgcli:
+    desc: install pgcli
+    sources:
+      - which pgcli
+    cmds:
+      - brew install pgcli
+
+  ## Setup phx env
+
+  setup: mix setup
+
+  # https://hexdocs.pm/phoenix/installation.html
+  # for elixir and erlang install ref https://github.com/cao7113/hello-elixir/blob/main/Taskfile.yml#L27
+
+  # install phx app generator
+  install-phx-new: mix archive.install hex phx_new --force
+  # mix help phx.new
+
+  mk-hello: mix phx.new hello-phx --module HelloPhx --app hello_phx --verbose --install

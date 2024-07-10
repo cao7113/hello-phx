@@ -52,6 +52,17 @@
         v<%= Application.spec(:phoenix, :vsn) %>
       </small>
     </h1>
+    <p>
+      <.link href={~p"/products"}> Explore Products</.link>
+      ||
+      <%= if HelloPhx.build_mode() == :dev do %>
+        <.link href="https://hello-phx-up.fly.dev" target="_blank">Go Fly app</.link>
+      <% end %>
+    </p>
+    <p>
+      Mode: <%= HelloPhx.build_mode() %> || <%= HelloPhx.commit() |> inspect %> on v<%= HelloPhx.vsn() %> || Locale: <%= @locale %>
+    </p>
+
     <p class="text-[2rem] mt-4 font-semibold leading-10 tracking-tighter text-zinc-900 text-balance">
       Peace of mind from prototype to production.
     </p>

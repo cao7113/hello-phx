@@ -54,7 +54,8 @@ if config_env() == :prod do
   config :hello_phx, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :hello_phx, HelloPhxWeb.Endpoint,
-    url: [host: host, port: 443, scheme: "https"],
+    # url: [host: host, port: 443, scheme: "https"],
+    url: [host: host, port: port, scheme: "http"],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -64,6 +65,24 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
+
+  # app_name =
+  #   System.get_env("FLY_APP_NAME") ||
+  #     raise "FLY_APP_NAME not available"
+  if app_name =
+       System.get_env("FLY_APP_NAME") do
+    config :libcluster,
+      topologies: [
+        fly6pn: [
+          strategy: Cluster.Strategy.DNSPoll,
+          config: [
+            polling_interval: 5_000,
+            query: "#{app_name}.internal",
+            node_basename: app_name
+          ]
+        ]
+      ]
+  end
 
   # ## SSL Support
   #
