@@ -15,7 +15,7 @@ defmodule HelloPhx.MixProject do
       deps: deps(),
       source_url: @source_url,
       releases: [
-        hello_api: [
+        hello_phx: [
           include_executables_for: [:unix],
           applications: [runtime_tools: :permanent],
           steps: release_steps(System.get_env("RELEASE_TAR"))
