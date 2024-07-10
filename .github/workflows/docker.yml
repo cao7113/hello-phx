@@ -1,0 +1,44 @@
+name: Docker Try
+on:
+  push:
+    branches:
+      - docker
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test-docker:
+    runs-on: ubuntu-latest
+    services:
+      api-server:
+        image: cao7113/hello-phx
+        ports:
+          - 4000:4000
+
+      # https://github.com/cao7113/hello-phx/pkgs/container/hello-phx
+      api-server2:
+        image: ghcr.io/cao7113/hello-phx
+        ports:
+          - 4002:4000
+
+    steps:
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+
+      - name: Ping api-server
+        run: |
+          sleep 1
+          echo Ping api-server
+          curl -sSL http://localhost:4000/api/ping
+          echo Ping api-server2
+          curl -sSL http://localhost:4002/api/ping
+
+      - name: Api build info
+        run: |
+          echo api-server build info:
+          curl -sSL http://localhost:4000/api | jq
+          echo api-server2 build info:
+          curl -sSL http://localhost:4002/api | jq

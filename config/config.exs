@@ -11,6 +11,15 @@ config :hello_phx,
   ecto_repos: [HelloPhx.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :hello_phx,
+  build_mode: config_env(),
+  build_time: DateTime.utc_now(),
+  source_url: Mix.Project.config()[:source_url],
+  commit: %{
+    commit_id: System.get_env("GIT_COMMIT_ID", ""),
+    commit_time: System.get_env("GIT_COMMIT_TIME", "")
+  }
+
 # Configures the endpoint
 config :hello_phx, HelloPhxWeb.Endpoint,
   url: [host: "localhost"],
@@ -60,6 +69,10 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+## deps
+config :endon,
+  repo: HelloPhx.Repo
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
