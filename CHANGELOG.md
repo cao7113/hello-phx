@@ -5,6 +5,15 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [v0.1.6](https://github.com/cao7113/hello-phx/compare/v0.1.5...v0.1.6) (2024-07-13)
+
+
+
+
+### Improvements:
+
+* use docker-compose and test released docker images in github actions
+
 ## [v0.1.5](https://github.com/cao7113/hello-phx/compare/v0.1.4...v0.1.5) (2024-07-10)
 
 
