@@ -110,10 +110,10 @@ jobs:
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
 
-  # test-docker-images:
-  #   name: Test latest docker images
-  #   needs: push-images
-  #   uses: ./.github/workflows/docker.yml
+  test-docker-images:
+    name: Test latest docker images
+    needs: push-images
+    uses: ./.github/workflows/docker.yml
 
   release-tar:
     # strategy:
