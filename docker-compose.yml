@@ -92,6 +92,7 @@ services:
         # ping -c 3 web
         echo Ping web api
         curl -sS  http://web:4000/api/ping
+        echo
         echo Get web build info
         curl -sS  http://web:4000/api
         echo
