@@ -95,6 +95,25 @@ tasks:
 
   ## Docker build with orbstack
   dk-build: docker build -t hello_phx .
+  # docker images
+  # https://hub.docker.com/r/cao7113/hello-phx
+  # https://github.com/cao7113/hello-phx/pkgs/container/hello-phx
+  dk-pull-ghcr: docker pull ghcr.io/cao7113/hello-phx
+  dk-run: docker run --name hello-phx --rm -it -p 4000:4000 ghcr.io/cao7113/hello-phx bin/hello_phx start_iex
+  # http://hello-phx.orb.local:4000 or http://localhost:4000
+  dk-ping: curl http://hello-phx.orb.local | jq
+  dk-sh: docker run --rm -it ghcr.io/cao7113/hello-phx sh
+
+  # task dcom -- up
+  dcom: |
+    docker compose build --build-arg GIT_COMMIT_ID=$(git log -1 --format="%H") --build-arg GIT_COMMIT_TIME=$(git log -1 --format="%ct") web
+    docker compose {{.CLI_ARGS}}
+
+  # docker pull docker.linkos.org/hexpm/elixir:1.17.2-erlang-27.0-debian-bullseye-20240701-slim
+  # docker pull docker.linkos.org/library/debian:bullseye-20240701-slim
+  # docker pull docker.linkos.org/library/postgres
+
+  pgcli: pgcli postgresql://postgres:postgres@localhost:5433
 
   ## Render has first class support for Phoenix applications.
 
