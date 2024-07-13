@@ -17,7 +17,7 @@ jobs:
     uses: ./.github/workflows/ci.yml
 
   push-images:
-    name: Push Docker image to Docker Hub and Github Packages
+    name: Push docker images to hub and ghcr.io
     runs-on: ubuntu-latest
     needs: check-ci
     permissions:
@@ -104,7 +104,7 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy fly app
-        run: fly deploy --image ghcr.io/cao7113/hello-phx:{{ github.ref_name }} --debug --verbose
+        run: fly deploy --image ghcr.io/${{ github.repository }}:${{ github.ref_name }} --debug --verbose
         env:
           # https://github.com/superfly/flyctl-actions?tab=readme-ov-file#secrets
           # https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#speed-run-your-way-to-continuous-deployment
