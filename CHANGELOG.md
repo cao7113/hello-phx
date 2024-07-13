@@ -5,6 +5,15 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [v0.1.9](https://github.com/cao7113/hello-phx/compare/v0.1.8...v0.1.9) (2024-07-13)
+
+
+
+
+### Bug Fixes:
+
+* use flyctl than fly in actions
+
 ## [v0.1.8](https://github.com/cao7113/hello-phx/compare/v0.1.7...v0.1.8) (2024-07-13)
 
 
