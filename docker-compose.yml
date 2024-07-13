@@ -15,7 +15,7 @@ services:
       - 25432:5432
     # https://docs.docker.com/compose/compose-file/05-services/#healthcheck
     healthcheck:
-      test: pg_isready
+      test: pg_isready -U postgres
       interval: 1m30s
       timeout: 10s
       retries: 3
