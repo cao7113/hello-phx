@@ -96,6 +96,10 @@ jobs:
     needs: test-docker-images
     concurrency: deploy-group
     steps:
+      # fly.toml require this step
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
       # https://github.com/superfly/flyctl-actions
       # https://github.com/marketplace/actions/github-action-for-flyctl
       - name: Setup flyctl
