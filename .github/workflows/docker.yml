@@ -19,4 +19,4 @@ jobs:
       - name: Run app in docker compose env
         run: |
           docker compose version
-          docker compose up --exit-code-from curl # --abort-on-container-exit
+          docker compose up --quiet-pull --exit-code-from curl # --abort-on-container-exit
