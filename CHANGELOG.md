@@ -5,6 +5,15 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [v0.1.11](https://github.com/cao7113/hello-phx/compare/v0.1.10...v0.1.11) (2024-07-15)
+
+
+
+
+### Bug Fixes:
+
+* missing checkout before fly deploy
+
 ## [v0.1.10](https://github.com/cao7113/hello-phx/compare/v0.1.9...v0.1.10) (2024-07-15)
 
 
