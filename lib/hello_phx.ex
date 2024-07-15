@@ -23,7 +23,8 @@ defmodule HelloPhx do
       build_mode: build_mode(),
       build_time: build_time(),
       system: System.build_info(),
-      commit: commit()
+      commit: commit(),
+      node: Node.self()
     }
   end
 

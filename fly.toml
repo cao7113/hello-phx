@@ -15,9 +15,9 @@ kill_signal = 'SIGTERM'
 [env]
   PHX_HOST = 'hello-phx-up.fly.dev'
   PORT = '8080'
-  # Appended by flyctl https://fly.io/docs/elixir/getting-started/#important-ipv6-settings
-  ECTO_IPV6 = "true"
+  # https://fly.io/docs/elixir/getting-started/#important-ipv6-settings
   ERL_AFLAGS = "-proto_dist inet6_tcp"
+  ECTO_IPV6 = "true"
 
 [http_service]
   internal_port = 8080

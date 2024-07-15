@@ -2,6 +2,9 @@
 version: "3"
 vars:
   HOST: "http://localhost:4000"
+  ORB_PROD_ROOT: "_build/orb-prod"
+  # DOCKER_ORB_HOST: "http://hello-phx-web1.orb.local"
+  DOCKER_ORB_HOST: "https://web.hello-phx.orb.local"
 # dotenv: [".envrc"]
 
 includes:
@@ -9,6 +12,8 @@ includes:
     taskfile: ./Taskfile-fly-io.yml
     aliases: [f, fly]
     optional: true
+
+## Render has first class support for Phoenix applications.
 
 tasks:
   default: mix test
@@ -93,6 +98,24 @@ tasks:
         source .env.prod
         _build/prod/rel/hello_phx/bin/migrate
 
+  ## Local prod env in Orbstack
+  # run `orb` into default ubuntu box(ubox1), then do belows in current project root:
+  orb-home: curl http://ubox1.orb.local:4000/api | jq
+  orb-ping: curl http://ubox1.orb.local:4000/api/ping
+  orb-run: orb {{.ORB_PROD_ROOT}}/current/bin/hello_phx {{.CLI_ARGS}}
+  orb-pid: task orb-run -- pid
+  orb-sh: task orb-run -- remote
+  orb-stop: task orb-run -- stop
+  # deploy a version from github vsn release in orb env, as following:
+  #   task orb-deploy -- v0.1.4
+  orb-deploy: orb {{.ORB_PROD_ROOT}}/deploy.sh {{.CLI_ARGS}}
+  orb-setup: |
+    mkdir {{.ORB_PROD_ROOT}}
+    orb run/setup.sh {{.ORB_PROD_ROOT}}
+  orb-setup-local: |
+    mkdir {{.ORB_PROD_ROOT}}
+    cp run/deploy.sh {{.ORB_PROD_ROOT}}/
+
   ## Docker build with orbstack
   dk-build: docker build -t hello_phx .
   # docker images
@@ -100,8 +123,7 @@ tasks:
   # https://github.com/cao7113/hello-phx/pkgs/container/hello-phx
   dk-pull-ghcr: docker pull ghcr.io/cao7113/hello-phx
   dk-run: docker run --name hello-phx --rm -it -p 4000:4000 ghcr.io/cao7113/hello-phx bin/hello_phx start_iex
-  # http://hello-phx.orb.local:4000 or http://localhost:4000
-  dk-ping: curl http://hello-phx.orb.local | jq
+  dk-ping: curl http://hello-phx-web-1.orb.local | jq
   dk-sh: docker run --rm -it ghcr.io/cao7113/hello-phx sh
 
   # task dcom -- up
@@ -113,11 +135,8 @@ tasks:
   # docker pull docker.linkos.org/library/debian:bullseye-20240701-slim
   # docker pull docker.linkos.org/library/postgres
 
-  pgcli: pgcli postgresql://postgres:postgres@localhost:5433
-
-  ## Render has first class support for Phoenix applications.
-
   ## DB Setup
+  pgcli: pgcli postgresql://postgres:postgres@localhost:5433
   # db: sudo -u postgres pgcli hello_phx_dev
   sql: pgcli hello_phx_dev
 

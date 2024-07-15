@@ -33,6 +33,7 @@ jobs:
         run: |
           echo GIT_COMMIT_TIME=$(git log -1 --format="%ct") >> $GITHUB_ENV
           echo GIT_COMMIT_ID=$(git log -1 --format="%H") >> $GITHUB_ENV
+
       # - name: Inspect Commit Env
       #   run: |
       #     echo GIT_COMMIT_ID=$GIT_COMMIT_ID vs ${{ env.GIT_COMMIT_ID }} in env context
@@ -95,9 +96,6 @@ jobs:
     needs: test-docker-images
     concurrency: deploy-group
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       # https://github.com/superfly/flyctl-actions
       # https://github.com/marketplace/actions/github-action-for-flyctl
       - name: Setup flyctl
@@ -182,4 +180,4 @@ jobs:
   #             echo "Use existed deploy-script: ${script_path}, manually delete it when need update"
   #           fi
 
-  #           $script_path $vsn bin/hello_api ${git_repo} 3
+  #           $script_path $vsn bin/hello_phx ${git_repo} 3

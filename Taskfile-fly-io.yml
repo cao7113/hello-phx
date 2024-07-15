@@ -38,6 +38,9 @@ tasks:
   board: fly dashboard
   # Add a dedicated ipv4 with: fly ips allocate-v4
 
+  ## DB
+  # fly checks list -a hello-phx-up-db
+
   # https://fly.io/docs/flyctl/install/
   install: brew install flyctl
   # fly auth login

@@ -63,6 +63,7 @@ services:
     # ports:
     #   - 4000
     environment:
+      #DATABASE_URL: "postgres://postgres:postgres@db:5432/hello_phx_prod"
       DATABASE_URL: "ecto://postgres:postgres@db:5432/hello_phx_prod"
       SECRET_KEY_BASE: "nVRbwGkshVYZzRYao7G98WZJBSRVqYsyVXZE0NjuSt57hBxwYTI9yPPh0fEaS1z/"
       # MIX_ENV: "prod"
@@ -70,7 +71,7 @@ services:
       PHX_HOST: "localhost"
       # PORT: "4000"
       # NOTE: not support ECTO_IPV6 in locally docker env???
-      ECTO_IPV6: false
+      # ECTO_IPV6: false
     # https://docs.docker.com/compose/compose-file/05-services/#healthcheck
     healthcheck:
       test: bin/hello_phx pid || exit 1
