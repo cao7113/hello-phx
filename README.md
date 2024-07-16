@@ -30,7 +30,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## More
 
-https://github.com/fly-apps/hello_elixir
+- https://github.com/fly-apps/hello_elixir
+- https://github.com/cao7113/hello-api-elixir
 
 ## Learn more
 

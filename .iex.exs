@@ -18,4 +18,4 @@ alias HelloPhx.Accounts
 alias HelloPhx.Accounts.User
 
 # handy functions
-import Ecto.Query
+# import Ecto.Query

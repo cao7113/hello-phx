@@ -1,0 +1,16 @@
+# Test fly remote
+
+## Section
+
+```elixir
+HelloPhx.build_info
+```
+
+```elixir
+HelloPhx.Catalog.Product.first
+```
+
+```elixir
+require Logger
+Logger.info("Testing logger")
+```

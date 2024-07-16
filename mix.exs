@@ -85,7 +85,11 @@ defmodule HelloPhx.MixProject do
       {:git_ops, "~> 2.6", only: [:dev], runtime: false},
 
       ## cluster
-      {:libcluster, "~> 3.3"}
+      {:libcluster, "~> 3.3"},
+
+      # Graphing/charting - for Livebook or analysis
+      {:vega_lite, "~> 0.1.0"},
+      {:kino, "~> 0.1.0"}
 
       ## Admin
       # https://github.com/aesmail/kaffy

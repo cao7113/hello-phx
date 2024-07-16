@@ -16,6 +16,7 @@
 # You can explicitly set the COOKIE value in the script if you prefer. That would look like this.
 #
 # COOKIE=YOUR-COOKIE-VALUE
+COOKIE=$RELEASE_COOKIE
 
 set -e
 
@@ -47,7 +48,8 @@ if [ -z "$private_ip" ]; then
 fi
 
 # Assemble the full node name
-FULL_NODE_NAME="${app_name}-${image_tags}@${private_ip}"
+# FULL_NODE_NAME="${app_name}-${image_tags}@${private_ip}"
+FULL_NODE_NAME="${app_name}@${private_ip}"
 echo Attempting to connect to $FULL_NODE_NAME
 
 # IMPORTANT:
