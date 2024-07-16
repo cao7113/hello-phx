@@ -28,6 +28,10 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 - [Github Container Image Packages](https://github.com/cao7113/hello-phx/pkgs/container/hello-phx)
 - [DockerHub images](https://hub.docker.com/repository/docker/cao7113/hello-phx/general)
 
+## More
+
+https://github.com/fly-apps/hello_elixir
+
 ## Learn more
 
 - Official website: https://www.phoenixframework.org/

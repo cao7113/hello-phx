@@ -18,6 +18,7 @@ kill_signal = 'SIGTERM'
   # https://fly.io/docs/elixir/getting-started/#important-ipv6-settings
   ERL_AFLAGS = "-proto_dist inet6_tcp"
   ECTO_IPV6 = "true"
+  RELEASE_COOKIE = "73TPJVMoeacSQ0uK-vyJOp4tL9dRYk2wmwq7tmHtaX0HWfl-59NWLw=="
 
 [http_service]
   internal_port = 8080

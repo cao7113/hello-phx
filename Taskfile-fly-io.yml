@@ -6,7 +6,7 @@ version: "3"
 vars:
   APP: hello_phx
   FLY_APP_NAME: hello-phx-up
-  FLY_DB_APP_NAME: hello-phx-up
+  FLY_DB_APP_NAME: hello-phx-up-db
 
 tasks:
   default: echo fly on app {{.FLY_APP_NAME}}
