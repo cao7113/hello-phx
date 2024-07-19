@@ -88,8 +88,9 @@ defmodule HelloPhx.MixProject do
       {:libcluster, "~> 3.3"},
 
       # Graphing/charting - for Livebook or analysis
-      {:vega_lite, "~> 0.1.0"},
-      {:kino, "~> 0.1.0"}
+      {:vega_lite, "~> 0.1.9"},
+      {:kino, "~> 0.13.2"},
+      {:kino_vega_lite, "~> 0.1.13"}
 
       ## Admin
       # https://github.com/aesmail/kaffy

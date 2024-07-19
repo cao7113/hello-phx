@@ -135,6 +135,18 @@ tasks:
   # docker pull docker.linkos.org/library/debian:bullseye-20240701-slim
   # docker pull docker.linkos.org/library/postgres
 
+  ## Livebook cluster testing
+  # Attach on notebook's runtime with: hello-phx1@127.0.0.1 and hello cookie
+  lv-hello1: iex --name hello-phx1@127.0.0.1 --cookie hello --erl "-kernel shell_history enabled" -S mix phx.server
+  # below not work in livebook?
+  # lv-hello11: iex --sname hello-phx1 --cookie hello --erl "-kernel shell_history enabled" -S mix
+  lv-start: livebook server {{.CLI_ARGS}}
+  lv-data: task lv-start -- notebooks/explore-data.livemd
+  lv-help: task lv-start -- --help
+  lv-install: mix archive.install hex livebook
+  # https://fly.io/docs/elixir/advanced-guides/clustering-from-home-to-your-app-in-fly/
+  lv-fly-remote: ./cluster-with-remote.sh
+
   ## DB Setup
   pgcli: pgcli postgresql://postgres:postgres@localhost:5433
   # db: sudo -u postgres pgcli hello_phx_dev

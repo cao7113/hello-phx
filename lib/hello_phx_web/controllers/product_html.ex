@@ -20,4 +20,9 @@ defmodule HelloPhxWeb.ProductHTML do
     for cat <- HelloPhx.Catalog.list_categories(),
         do: [key: cat.title, value: cat.id, selected: cat.id in existing_ids]
   end
+
+  def product_categories(product) do
+    product.categories
+    |> Enum.map(& &1.title)
+  end
 end

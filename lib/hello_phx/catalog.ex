@@ -22,8 +22,6 @@ defmodule HelloPhx.Catalog do
     Product
     |> preload(:categories)
     |> Repo.all()
-
-    # Repo.all(Product)
   end
 
   @doc """
@@ -137,7 +135,7 @@ defmodule HelloPhx.Catalog do
   def list_categories_by_id(nil), do: []
 
   def list_categories_by_id(category_ids) do
-    Repo.all(from c in Category, where: c.id in ^category_ids)
+    Repo.all(from(c in Category, where: c.id in ^category_ids))
   end
 
   @doc """
