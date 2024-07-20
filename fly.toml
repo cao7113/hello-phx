@@ -10,29 +10,30 @@ kill_signal = 'SIGTERM'
 [build]
 
 [deploy]
-  release_command = '/app/bin/migrate'
+release_command = '/app/bin/migrate'
 
 [env]
-  PHX_HOST = 'hello-phx-up.fly.dev'
-  PORT = '8080'
-  # https://fly.io/docs/elixir/getting-started/#important-ipv6-settings
-  ERL_AFLAGS = "-proto_dist inet6_tcp"
-  ECTO_IPV6 = "true"
-  RELEASE_COOKIE = "73TPJVMoeacSQ0uK-vyJOp4tL9dRYk2wmwq7tmHtaX0HWfl-59NWLw=="
+PHX_HOST = 'hello-phx-up.fly.dev'
+PORT = '8080'
+# https://fly.io/docs/elixir/getting-started/#important-ipv6-settings
+DNS_CLUSTER_QUERY=
+ERL_AFLAGS = "-proto_dist inet6_tcp"
+ECTO_IPV6 = "true"
+RELEASE_COOKIE = "73TPJVMoeacSQ0uK-vyJOp4tL9dRYk2wmwq7tmHtaX0HWfl-59NWLw=="
 
 [http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 1
-  processes = ['app']
+internal_port = 8080
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 0
+processes = ['app']
 
-  [http_service.concurrency]
-    type = 'connections'
-    hard_limit = 1000
-    soft_limit = 1000
+[http_service.concurrency]
+type = 'connections'
+hard_limit = 1000
+soft_limit = 1000
 
 [[vm]]
-  size = 'shared-cpu-1x'
-  memory = "512mb"
+size = 'shared-cpu-1x'
+memory = "512mb"

@@ -60,7 +60,7 @@
       <% end %>
     </p>
     <p>
-      Mode: <%= HelloPhx.build_mode() %> || <%= HelloPhx.commit() |> inspect %> on v<%= HelloPhx.vsn() %> || Locale: <%= @locale %>
+      Mode: <%= HelloPhx.build_mode() %> || v<%= HelloPhx.vsn() %> commit at: <%= HelloPhx.commit().commit_time %> head: <%= HelloPhx.commit().commit_id |> String.slice(0, 6) %>  || Locale: <%= @locale %>
     </p>
 
     <p class="text-[2rem] mt-4 font-semibold leading-10 tracking-tighter text-zinc-900 text-balance">

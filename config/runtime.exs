@@ -69,20 +69,20 @@ if config_env() == :prod do
   # app_name =
   #   System.get_env("FLY_APP_NAME") ||
   #     raise "FLY_APP_NAME not available"
-  if app_name =
-       System.get_env("FLY_APP_NAME") do
-    config :libcluster,
-      topologies: [
-        fly6pn: [
-          strategy: Cluster.Strategy.DNSPoll,
-          config: [
-            polling_interval: 5_000,
-            query: "#{app_name}.internal",
-            node_basename: app_name
-          ]
-        ]
-      ]
-  end
+  # if app_name =
+  #      System.get_env("FLY_APP_NAME") do
+  #   config :libcluster,
+  #     topologies: [
+  #       fly6pn: [
+  #         strategy: Cluster.Strategy.DNSPoll,
+  #         config: [
+  #           polling_interval: 5_000,
+  #           query: "#{app_name}.internal",
+  #           node_basename: app_name
+  #         ]
+  #       ]
+  #     ]
+  # end
 
   # ## SSL Support
   #

@@ -84,8 +84,8 @@ defmodule HelloPhx.MixProject do
       # {:timex, "~> 3.7"},
       {:git_ops, "~> 2.6", only: [:dev], runtime: false},
 
-      ## cluster
-      {:libcluster, "~> 3.3"},
+      # ## cluster
+      # {:libcluster, "~> 3.3"},
 
       # Graphing/charting - for Livebook or analysis
       {:vega_lite, "~> 0.1.9"},

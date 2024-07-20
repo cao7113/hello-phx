@@ -145,7 +145,8 @@ tasks:
   lv-help: task lv-start -- --help
   lv-install: mix archive.install hex livebook
   # https://fly.io/docs/elixir/advanced-guides/clustering-from-home-to-your-app-in-fly/
-  lv-fly-remote: ./cluster-with-remote.sh
+  lv-fly-remote: run/cluster-with-remote.sh
+  dns-query: dig hello-phx-up.internal aaaa
 
   ## DB Setup
   pgcli: pgcli postgresql://postgres:postgres@localhost:5433

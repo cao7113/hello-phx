@@ -37,6 +37,7 @@ tasks:
   # Opening https://fly.io/apps/hello-phx-up
   board: fly dashboard
   # Add a dedicated ipv4 with: fly ips allocate-v4
+  ips: fly ip private
 
   ## DB
   # fly checks list -a hello-phx-up-db
