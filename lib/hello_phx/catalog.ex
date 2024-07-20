@@ -21,6 +21,7 @@ defmodule HelloPhx.Catalog do
   def list_products do
     Product
     |> preload(:categories)
+    |> order_by(desc: :updated_at)
     |> Repo.all()
   end
 
