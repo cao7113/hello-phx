@@ -16,7 +16,6 @@ release_command = '/app/bin/migrate'
 PHX_HOST = 'hello-phx-up.fly.dev'
 PORT = '8080'
 # https://fly.io/docs/elixir/getting-started/#important-ipv6-settings
-DNS_CLUSTER_QUERY=
 ERL_AFLAGS = "-proto_dist inet6_tcp"
 ECTO_IPV6 = "true"
 RELEASE_COOKIE = "73TPJVMoeacSQ0uK-vyJOp4tL9dRYk2wmwq7tmHtaX0HWfl-59NWLw=="
