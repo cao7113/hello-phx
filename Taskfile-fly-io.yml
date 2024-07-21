@@ -26,7 +26,8 @@ tasks:
   launch: fly launch --debug --verbose # --now
   vm: fly machine ls
   ls: fly app ls
-  db: fly postgres connect -a {{.FLY_DB_APP_NAME}}
+  db: fly postgres connect -a {{.FLY_DB_APP_NAME}} --database hello_phx_up
+  db-users: fly postgres users list --app {{.FLY_DB_APP_NAME}}
   # plain env and secrets
   env: fly config env
   sec: fly secrets ls
@@ -40,7 +41,7 @@ tasks:
   ips: fly ip private
 
   ## DB
-  # fly checks list -a hello-phx-up-db
+  db-check: fly checks list -a {{.FLY_DB_APP_NAME}}
 
   # https://fly.io/docs/flyctl/install/
   install: brew install flyctl
