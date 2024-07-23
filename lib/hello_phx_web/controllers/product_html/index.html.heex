@@ -17,6 +17,7 @@
   <%!-- <:col :let={product} label="Description"><%= product.description %></:col> --%>
   <:col :let={product} label="Price"><%= product.price %></:col>
   <:col :let={product} label="Views"><%= product.views %></:col>
+  <:col :let={product} label="UpdatedAt"><%= product.updated_at %></:col>
   <:action :let={product}>
     <div class="sr-only">
       <.link navigate={~p"/products/#{product}"}>Show</.link>
